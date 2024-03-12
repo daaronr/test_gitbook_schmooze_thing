@@ -23,6 +23,8 @@ The technology stack for the ChatMatch app should include:
 4. **Authentication**: Passport.js for handling user authentication and authorization.
 5. **Real-time communication**: Socket.IO for enabling real-time messaging and notifications.
 
+Test adding text here
+
 ###
 
 \
