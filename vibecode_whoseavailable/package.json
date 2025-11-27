@@ -1,0 +1,17 @@
+{
+  "name": "whos-available",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Minimal 'who's available' realtime app (name, what kind of chat, how long)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "bufferutil": "^4.0.9",
+    "express": "^4.19.2",
+    "socket.io": "^4.7.5",
+    "utf-8-validate": "^6.0.5"
+  },
+  "license": "MIT"
+}

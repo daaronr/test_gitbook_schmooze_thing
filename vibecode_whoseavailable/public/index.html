@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Who's Available</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header>
+    <h1>Who's Available</h1>
+    <div class="muted">Tell people you’re free for a chat—what kind, and for how long.</div>
+  </header>
+
+  <main>
+    <section class="card">
+      <div class="grid">
+        <div>
+          <label>Your name</label>
+          <input id="name" placeholder="e.g., Alex Kim">
+        </div>
+        <div>
+          <label>Room (optional, shareable)</label>
+          <input id="room" placeholder="e.g., hallway-a">
+        </div>
+      </div>
+
+      <label>What kind of chat?</label>
+      <div class="chips">
+        <label><input type="checkbox" class="kind" value="Quick hello"> Quick hello</label>
+        <label><input type="checkbox" class="kind" value="Coffee / social"> Coffee / social</label>
+        <label><input type="checkbox" class="kind" value="Technical"> Technical</label>
+        <label><input type="checkbox" class="kind" value="Brainstorm"> Brainstorm</label>
+      </div>
+
+      <label>Other tags (comma‑separated)</label>
+      <input id="tags" placeholder="policy, AI safety, product, hiring">
+
+      <div class="grid">
+        <div>
+          <label>Where / link (optional)</label>
+          <input id="location" placeholder="Lobby table 3 or https://zoom.us/j/...">
+        </div>
+        <div>
+          <label>Note (optional)</label>
+          <input id="note" placeholder="e.g., wearing a red cap">
+        </div>
+      </div>
+
+      <label>How long?</label>
+      <div class="row">
+        <div class="durations">
+          <button class="dur" data-min="10">10m</button>
+          <button class="dur" data-min="15">15m</button>
+          <button class="dur" data-min="30">30m</button>
+          <button class="dur" data-min="60">60m</button>
+        </div>
+        <div class="custom">
+          <input id="minutes" type="number" min="1" max="240" value="15"> <span class="muted">min</span>
+        </div>
+      </div>
+
+      <div class="row">
+        <button id="goBtn">I’m available</button>
+        <button id="extendBtn" class="ghost">+10m</button>
+        <button id="doneBtn" class="ghost">Done</button>
+        <button id="shareBtn" class="ghost">Share room link</button>
+      </div>
+      <div id="statusLine" class="muted"></div>
+    </section>
+
+    <section class="card">
+      <div class="row">
+        <input id="filter" placeholder="Filter by name, type, tag, location…">
+        <div class="muted small" id="nowline"></div>
+      </div>
+      <div id="list"></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="muted small">
+      Minimal demo. No logins. Data resets when the server restarts.
+    </div>
+  </footer>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>

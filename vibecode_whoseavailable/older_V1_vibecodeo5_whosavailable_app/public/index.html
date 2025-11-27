@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Big Schmooze (MVP)</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header>
+    <h1>Big Schmooze</h1>
+    <div id="eventHeader"></div>
+  </header>
+
+  <main id="main">
+    <section id="joinSection" class="card">
+      <h2>Start or Join an Event</h2>
+      <div class="row">
+        <div class="col">
+          <h3>Create a new event</h3>
+          <label>Event name</label>
+          <input id="newEventName" placeholder="e.g., EA Global 2025 — Hallway Track">
+          <button id="createEventBtn">Create</button>
+        </div>
+        <div class="col">
+          <h3>Join an existing event</h3>
+          <label>Event code</label>
+          <input id="joinCode" placeholder="ABCD" maxlength="6">
+          <label>Your name</label>
+          <input id="joinName" placeholder="Name">
+          <label>Title / Role</label>
+          <input id="joinTitle" placeholder="e.g., PhD student; PM; PI">
+          <label>Organization</label>
+          <input id="joinOrg" placeholder="Org / Affiliation">
+          <div class="row">
+            <div class="col">
+              <label>Ask (what you want)</label>
+              <textarea id="joinAsk" placeholder="What are you looking for? (max 200 chars)" maxlength="200"></textarea>
+            </div>
+            <div class="col">
+              <label>Offer (what you can give)</label>
+              <textarea id="joinOffer" placeholder="What can you help with? (max 200 chars)" maxlength="200"></textarea>
+            </div>
+          </div>
+          <label>Tags (comma-separated)</label>
+          <input id="joinTags" placeholder="econ, RCTs, policy, AI-safety">
+          <details>
+            <summary>Optional links</summary>
+            <label>LinkedIn</label>
+            <input id="joinLinkedin" placeholder="https://linkedin.com/in/you">
+            <label>Twitter / X</label>
+            <input id="joinTwitter" placeholder="https://x.com/you">
+            <label>Website</label>
+            <input id="joinWebsite" placeholder="https://yoursite.com">
+          </details>
+          <button id="joinBtn">Join Event</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="eventSection" class="hidden">
+      <div class="toolbar">
+        <div>
+          <span>Status:</span>
+          <button class="statusBtn" data-status="open">🟢 Open</button>
+          <button class="statusBtn" data-status="maybe">🟡 Maybe</button>
+          <button class="statusBtn" data-status="busy">🔴 Busy</button>
+          <button id="toggleVisibleBtn">👻 Hide/Show me</button>
+        </div>
+        <div class="filters">
+          <input id="filterText" placeholder="Filter by name, tag, org…">
+          <button id="shareLinkBtn">Share Link</button>
+        </div>
+      </div>
+
+      <div id="meCard" class="card subtle"></div>
+      <div id="participants"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Ultra-minimal MVP. No accounts, no email. Data clears if the server restarts.</p>
+  </footer>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>

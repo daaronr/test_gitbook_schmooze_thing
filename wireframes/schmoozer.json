@@ -1,0 +1,537 @@
+{
+    "mockup": {
+        "controls": {
+            "control": [
+                {
+                    "ID": "0",
+                    "typeID": "Label",
+                    "zOrder": "1",
+                    "measuredW": "157",
+                    "measuredH": "21",
+                    "x": "94",
+                    "y": "28",
+                    "properties": {
+                        "text": "Your general preferences",
+                        "bold": "true"
+                    }
+                },
+                {
+                    "ID": "2",
+                    "typeID": "Icon",
+                    "zOrder": "2",
+                    "measuredW": "48",
+                    "measuredH": "48",
+                    "x": "406",
+                    "y": "145",
+                    "properties": {
+                        "icon": {
+                            "ID": "skype",
+                            "size": "large"
+                        }
+                    }
+                },
+                {
+                    "ID": "3",
+                    "typeID": "Paragraph",
+                    "zOrder": "3",
+                    "measuredW": "275",
+                    "measuredH": "80",
+                    "x": "111",
+                    "y": "91",
+                    "properties": {
+                        "text": "- Order your apps by preference.\n\n- Click on each one to link it to your account"
+                    }
+                },
+                {
+                    "ID": "4",
+                    "typeID": "Label",
+                    "zOrder": "4",
+                    "measuredW": "41",
+                    "measuredH": "24",
+                    "x": "409",
+                    "y": "18",
+                    "properties": {
+                        "text": "Video",
+                        "size": "16"
+                    }
+                },
+                {
+                    "ID": "5",
+                    "typeID": "Label",
+                    "zOrder": "5",
+                    "measuredW": "73",
+                    "measuredH": "24",
+                    "x": "494",
+                    "y": "18",
+                    "properties": {
+                        "text": "Voice only",
+                        "size": "16"
+                    }
+                },
+                {
+                    "ID": "6",
+                    "typeID": "Icon",
+                    "zOrder": "6",
+                    "measuredW": "48",
+                    "measuredH": "48",
+                    "x": "505",
+                    "y": "49",
+                    "properties": {
+                        "icon": {
+                            "ID": "phone",
+                            "size": "large"
+                        }
+                    }
+                },
+                {
+                    "ID": "7",
+                    "typeID": "Label",
+                    "zOrder": "7",
+                    "measuredW": "55",
+                    "measuredH": "24",
+                    "x": "600",
+                    "y": "18",
+                    "properties": {
+                        "text": "Texting",
+                        "size": "16"
+                    }
+                },
+                {
+                    "ID": "8",
+                    "typeID": "Icon",
+                    "zOrder": "8",
+                    "measuredW": "48",
+                    "measuredH": "48",
+                    "x": "505",
+                    "y": "139",
+                    "properties": {
+                        "icon": {
+                            "ID": "skype",
+                            "size": "large"
+                        }
+                    }
+                },
+                {
+                    "ID": "9",
+                    "typeID": "Icon",
+                    "zOrder": "9",
+                    "measuredW": "48",
+                    "measuredH": "48",
+                    "x": "591",
+                    "y": "107",
+                    "properties": {
+                        "icon": {
+                            "ID": "commenting",
+                            "size": "large"
+                        }
+                    }
+                },
+                {
+                    "ID": "10",
+                    "typeID": "Icon",
+                    "zOrder": "10",
+                    "measuredW": "48",
+                    "measuredH": "48",
+                    "x": "599",
+                    "y": "49",
+                    "properties": {
+                        "icon": {
+                            "ID": "google",
+                            "size": "large"
+                        }
+                    }
+                },
+                {
+                    "ID": "11",
+                    "typeID": "Icon",
+                    "zOrder": "11",
+                    "measuredW": "48",
+                    "measuredH": "48",
+                    "x": "505",
+                    "y": "192",
+                    "properties": {
+                        "icon": {
+                            "ID": "google",
+                            "size": "large"
+                        }
+                    }
+                },
+                {
+                    "ID": "12",
+                    "typeID": "Icon",
+                    "zOrder": "12",
+                    "measuredW": "48",
+                    "measuredH": "48",
+                    "x": "402",
+                    "y": "97",
+                    "properties": {
+                        "icon": {
+                            "ID": "google",
+                            "size": "large"
+                        }
+                    }
+                },
+                {
+                    "ID": "13",
+                    "typeID": "Icon",
+                    "zOrder": "13",
+                    "measuredW": "48",
+                    "measuredH": "48",
+                    "x": "599",
+                    "y": "166",
+                    "properties": {
+                        "icon": {
+                            "ID": "facebook",
+                            "size": "large"
+                        }
+                    }
+                },
+                {
+                    "ID": "14",
+                    "typeID": "Icon",
+                    "zOrder": "14",
+                    "measuredW": "48",
+                    "measuredH": "48",
+                    "x": "402",
+                    "y": "49",
+                    "properties": {
+                        "icon": {
+                            "ID": "apple",
+                            "size": "large"
+                        }
+                    }
+                },
+                {
+                    "ID": "15",
+                    "typeID": "Icon",
+                    "zOrder": "15",
+                    "measuredW": "48",
+                    "measuredH": "48",
+                    "x": "505",
+                    "y": "240",
+                    "properties": {
+                        "icon": {
+                            "ID": "apple",
+                            "size": "large"
+                        }
+                    }
+                },
+                {
+                    "ID": "18",
+                    "typeID": "StickyNote",
+                    "zOrder": "16",
+                    "measuredW": "109",
+                    "measuredH": "123",
+                    "x": "655",
+                    "y": "43",
+                    "properties": {
+                        "text": "The Voice and text orderings can be made optional... default to the video order preferences"
+                    }
+                },
+                {
+                    "ID": "19",
+                    "typeID": "Icon",
+                    "zOrder": "17",
+                    "measuredW": "48",
+                    "measuredH": "48",
+                    "x": "406",
+                    "y": "192",
+                    "properties": {
+                        "icon": {
+                            "ID": "snapchat",
+                            "size": "large"
+                        }
+                    }
+                },
+                {
+                    "ID": "20",
+                    "typeID": "Icon",
+                    "zOrder": "18",
+                    "measuredW": "48",
+                    "measuredH": "48",
+                    "x": "505",
+                    "y": "91",
+                    "properties": {
+                        "icon": {
+                            "ID": "whatsapp",
+                            "size": "large"
+                        }
+                    }
+                },
+                {
+                    "ID": "21",
+                    "typeID": "Icon",
+                    "zOrder": "19",
+                    "measuredW": "48",
+                    "measuredH": "48",
+                    "x": "599",
+                    "y": "224",
+                    "properties": {
+                        "icon": {
+                            "ID": "whatsapp",
+                            "size": "large"
+                        }
+                    }
+                },
+                {
+                    "ID": "22",
+                    "typeID": "Icon",
+                    "zOrder": "20",
+                    "measuredW": "48",
+                    "measuredH": "48",
+                    "x": "406",
+                    "y": "240",
+                    "properties": {
+                        "icon": {
+                            "ID": "whatsapp",
+                            "size": "large"
+                        }
+                    }
+                },
+                {
+                    "ID": "24",
+                    "typeID": "CheckBoxGroup",
+                    "zOrder": "0",
+                    "measuredW": "698",
+                    "measuredH": "149",
+                    "x": "57",
+                    "y": "288",
+                    "properties": {
+                        "text": "When I am ready to schmooze, update my status on:\n[x] Skype \n[-] Facebook messenger\n[-] Google hangouts\n... to people in desired categories (friends, family, etc) even if they are not on Schmooze yet or not logged in.\nThis is not necessary, but it helps you engage with your freinds  who haven't yet discovered the wonders of Schmooze. \n"
+                    }
+                },
+                {
+                    "ID": "27",
+                    "typeID": "Label",
+                    "zOrder": "21",
+                    "measuredW": "123",
+                    "measuredH": "23",
+                    "x": "66",
+                    "y": "446",
+                    "properties": {
+                        "text": "Connect me with: ",
+                        "size": "15"
+                    }
+                },
+                {
+                    "ID": "29",
+                    "typeID": "HSlider",
+                    "zOrder": "22",
+                    "w": "343",
+                    "measuredW": "33",
+                    "measuredH": "12",
+                    "x": "66",
+                    "y": "485",
+                    "properties": {
+                        "thumb": "rectangle",
+                        "value": "11"
+                    }
+                },
+                {
+                    "ID": "31",
+                    "typeID": "TextArea",
+                    "zOrder": "23",
+                    "w": "92",
+                    "h": "72",
+                    "measuredW": "200",
+                    "measuredH": "140",
+                    "x": "44",
+                    "y": "507",
+                    "properties": {
+                        "text": "Only people meeting my exact requirements"
+                    }
+                },
+                {
+                    "ID": "32",
+                    "typeID": "TextArea",
+                    "zOrder": "24",
+                    "w": "98",
+                    "h": "92",
+                    "measuredW": "200",
+                    "measuredH": "140",
+                    "x": "380",
+                    "y": "497",
+                    "properties": {
+                        "text": "As many schmoozes as \"reasonably\" meet my requirements"
+                    }
+                },
+                {
+                    "ID": "33",
+                    "typeID": "TextArea",
+                    "zOrder": "25",
+                    "w": "98",
+                    "h": "45",
+                    "measuredW": "200",
+                    "measuredH": "140",
+                    "x": "189",
+                    "y": "520",
+                    "properties": {
+                        "text": "Something in between"
+                    }
+                },
+                {
+                    "ID": "34",
+                    "typeID": "Label",
+                    "zOrder": "26",
+                    "measuredW": "257",
+                    "measuredH": "23",
+                    "x": "66",
+                    "y": "646",
+                    "properties": {
+                        "text": "Do you tend to like to schmooze with...",
+                        "size": "15"
+                    }
+                },
+                {
+                    "ID": "38",
+                    "typeID": "List",
+                    "zOrder": "27",
+                    "w": "516",
+                    "h": "401",
+                    "measuredW": "378",
+                    "measuredH": "404",
+                    "x": "51",
+                    "y": "691",
+                    "properties": {
+                        "text": "People who are \n\n- Driving \n\n- In a car\n\n- Jogging\n\n- With children\n\n- On an intermittent connection\n\n\nPeople who often end schmoozes after less than 15 seconds \n\n\nPeople who extend more than ___% of scheduled schmoozes\n\n"
+                    }
+                },
+                {
+                    "ID": "39",
+                    "typeID": "ButtonBar",
+                    "zOrder": "28",
+                    "measuredW": "263",
+                    "measuredH": "21",
+                    "x": "290",
+                    "y": "736",
+                    "properties": {
+                        "text": "Hate, Meh, OK, Nice, Love it"
+                    }
+                },
+                {
+                    "ID": "40",
+                    "typeID": "ButtonBar",
+                    "zOrder": "29",
+                    "measuredW": "263",
+                    "measuredH": "21",
+                    "x": "290",
+                    "y": "773",
+                    "properties": {
+                        "text": "Hate, Meh, OK, Nice, Love it"
+                    }
+                },
+                {
+                    "ID": "41",
+                    "typeID": "ButtonBar",
+                    "zOrder": "30",
+                    "measuredW": "263",
+                    "measuredH": "21",
+                    "x": "290",
+                    "y": "810",
+                    "properties": {
+                        "text": "Hate, Meh, OK, Nice, Love it"
+                    }
+                },
+                {
+                    "ID": "42",
+                    "typeID": "ButtonBar",
+                    "zOrder": "31",
+                    "measuredW": "263",
+                    "measuredH": "21",
+                    "x": "290",
+                    "y": "858",
+                    "properties": {
+                        "text": "Hate, Meh, OK, Nice, Love it"
+                    }
+                },
+                {
+                    "ID": "43",
+                    "typeID": "ButtonBar",
+                    "zOrder": "32",
+                    "measuredW": "263",
+                    "measuredH": "21",
+                    "x": "290",
+                    "y": "902",
+                    "properties": {
+                        "text": "Hate, Meh, OK, Nice, Love it"
+                    }
+                },
+                {
+                    "ID": "44",
+                    "typeID": "ButtonBar",
+                    "zOrder": "33",
+                    "measuredW": "263",
+                    "measuredH": "21",
+                    "x": "274",
+                    "y": "985",
+                    "properties": {
+                        "text": "Hate, Meh, OK, Nice, Love it"
+                    }
+                },
+                {
+                    "ID": "45",
+                    "typeID": "ButtonBar",
+                    "zOrder": "34",
+                    "measuredW": "263",
+                    "measuredH": "21",
+                    "x": "274",
+                    "y": "1050",
+                    "properties": {
+                        "text": "Hate, Meh, OK, Nice, Love it"
+                    }
+                },
+                {
+                    "ID": "46",
+                    "typeID": "TextInput",
+                    "zOrder": "35",
+                    "measuredW": "496",
+                    "measuredH": "27",
+                    "x": "76",
+                    "y": "1163",
+                    "properties": {
+                        "text": "Sports, family, politics, jokes, music, television, tech, work, mortgages, kids, school,..."
+                    }
+                },
+                {
+                    "ID": "47",
+                    "typeID": "Paragraph",
+                    "zOrder": "36",
+                    "w": "288",
+                    "h": "44",
+                    "measuredW": "275",
+                    "measuredH": "80",
+                    "x": "76",
+                    "y": "1119",
+                    "properties": {
+                        "text": "What topics do you like to talk about, and what do you like to do when schmoozin'? "
+                    }
+                },
+                {
+                    "ID": "48",
+                    "typeID": "StickyNote",
+                    "zOrder": "37",
+                    "w": "197",
+                    "h": "187",
+                    "measuredW": "109",
+                    "measuredH": "123",
+                    "x": "591",
+                    "y": "1103",
+                    "properties": {
+                        "text": "As they enter it will autocomplete with things other users (in their network) have entered. \n\nWe can use this to come up with options for the 'what' screen. We can also generate word clouds from this for people and groups. "
+                    }
+                }
+            ]
+        },
+        "attributes": {
+            "name": "Basic settings",
+            "order": 938433.3724960069,
+            "parentID": null
+        },
+        "resourceID": "60757288-0AAD-476C-A499-5D7E3BD31F73",
+        "mockupH": "1272",
+        "mockupW": "744",
+        "measuredW": "788",
+        "measuredH": "1290",
+        "version": "1.0"
+    }
+}
