@@ -1,0 +1,51 @@
+{
+  "categories": [
+    {
+      "id": "mode",
+      "label": "How can we connect?",
+      "types": [
+        { "id": "quick-hello", "label": "Quick hello", "icon": "👋", "duration": 5 },
+        { "id": "phone-call", "label": "Phone call", "icon": "📞", "duration": 15 },
+        { "id": "video-call", "label": "Video call", "icon": "📹", "duration": 30 },
+        { "id": "screen-share", "label": "Screen sharing", "icon": "🖥️", "duration": 45 },
+        { "id": "in-person", "label": "In person", "icon": "🤝", "duration": 30 },
+        { "id": "async-text", "label": "Text/async only", "icon": "💬", "duration": 60 }
+      ]
+    },
+    {
+      "id": "attention",
+      "label": "What's your attention level?",
+      "types": [
+        { "id": "full-attention", "label": "Full attention", "icon": "🎯", "duration": 60 },
+        { "id": "multitasking", "label": "Multitasking OK", "icon": "🔀", "duration": 30 },
+        { "id": "listen-only", "label": "Can listen, can't talk", "icon": "👂", "duration": 15 },
+        { "id": "drive-time", "label": "Driving/walking", "icon": "🚗", "duration": 20 }
+      ]
+    },
+    {
+      "id": "topics",
+      "label": "What do you want to chat about?",
+      "advanced": true,
+      "types": [
+        { "id": "work", "label": "Work stuff", "icon": "💼", "duration": 30 },
+        { "id": "technical", "label": "Technical", "icon": "💻", "duration": 30 },
+        { "id": "brainstorm", "label": "Brainstorm", "icon": "💡", "duration": 30 },
+        { "id": "social", "label": "Social/casual", "icon": "☕", "duration": 15 },
+        { "id": "non-work", "label": "Non-work only", "icon": "🌴", "duration": 30 },
+        { "id": "anything", "label": "Anything!", "icon": "🌈", "duration": 15 }
+      ]
+    }
+  ],
+  "contactMethods": [
+    { "id": "phone", "label": "Phone", "icon": "📞", "placeholder": "+1 555-123-4567", "urlTemplate": "tel:{value}" },
+    { "id": "whatsapp", "label": "WhatsApp", "icon": "💬", "placeholder": "+1 555-123-4567", "urlTemplate": "https://wa.me/{value}" },
+    { "id": "zoom", "label": "Zoom", "icon": "📹", "placeholder": "https://zoom.us/j/...", "urlTemplate": "{value}" },
+    { "id": "meet", "label": "Google Meet", "icon": "🎥", "placeholder": "https://meet.google.com/...", "urlTemplate": "{value}" },
+    { "id": "teams", "label": "Teams", "icon": "👥", "placeholder": "https://teams.microsoft.com/...", "urlTemplate": "{value}" },
+    { "id": "slack", "label": "Slack DM", "icon": "💼", "placeholder": "@username or channel", "urlTemplate": null },
+    { "id": "email", "label": "Email", "icon": "📧", "placeholder": "you@example.com", "urlTemplate": "mailto:{value}" },
+    { "id": "calendly", "label": "Calendly", "icon": "📅", "placeholder": "https://calendly.com/...", "urlTemplate": "{value}" },
+    { "id": "custom", "label": "Custom link", "icon": "🔗", "placeholder": "https://...", "urlTemplate": "{value}" }
+  ],
+  "maxSelections": 6
+}

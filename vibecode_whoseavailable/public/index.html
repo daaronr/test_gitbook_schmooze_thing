@@ -2,89 +2,210 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="See who's available for a chat, right now.">
   <title>Who's Available</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#2563eb">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Available">
+  <link rel="apple-touch-icon" href="/icons/icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/icons/icon.svg">
+  <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
+
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
   <header>
-    <h1>Who's Available</h1>
-    <div class="muted">Tell people you’re free for a chat—what kind, and for how long.</div>
+    <div class="header-row">
+      <div>
+        <h1>Who's Available</h1>
+        <p class="muted">See who's around and ready to chat.</p>
+      </div>
+      <button id="darkModeToggle" class="ghost icon-btn" title="Toggle dark mode">🌙</button>
+    </div>
   </header>
 
   <main>
+    <!-- Your Info (Basic) -->
     <section class="card">
-      <div class="grid">
-        <div>
-          <label>Your name</label>
-          <input id="name" placeholder="e.g., Alex Kim">
-        </div>
-        <div>
-          <label>Room (optional, shareable)</label>
-          <input id="room" placeholder="e.g., hallway-a">
-        </div>
+      <div class="card-header">
+        <h2 class="section-title">Your info</h2>
+        <button id="toggleAdvanced" class="ghost small">Show more options</button>
       </div>
-
-      <label>What kind of chat?</label>
-      <div class="chips">
-        <label><input type="checkbox" class="kind" value="Quick hello"> Quick hello</label>
-        <label><input type="checkbox" class="kind" value="Coffee / social"> Coffee / social</label>
-        <label><input type="checkbox" class="kind" value="Technical"> Technical</label>
-        <label><input type="checkbox" class="kind" value="Brainstorm"> Brainstorm</label>
-      </div>
-
-      <label>Other tags (comma‑separated)</label>
-      <input id="tags" placeholder="policy, AI safety, product, hiring">
 
       <div class="grid">
         <div>
-          <label>Where / link (optional)</label>
-          <input id="location" placeholder="Lobby table 3 or https://zoom.us/j/...">
+          <label for="name">Your name</label>
+          <input id="name" type="text" placeholder="Alex Kim" autocomplete="name">
         </div>
         <div>
-          <label>Note (optional)</label>
-          <input id="note" placeholder="e.g., wearing a red cap">
+          <label for="room">Room</label>
+          <input id="room" type="text" placeholder="general">
         </div>
       </div>
 
-      <label>How long?</label>
-      <div class="row">
-        <div class="durations">
-          <button class="dur" data-min="10">10m</button>
-          <button class="dur" data-min="15">15m</button>
-          <button class="dur" data-min="30">30m</button>
-          <button class="dur" data-min="60">60m</button>
-        </div>
-        <div class="custom">
-          <input id="minutes" type="number" min="1" max="240" value="15"> <span class="muted">min</span>
+      <!-- Advanced settings (hidden by default) -->
+      <div id="advancedSettings" class="advanced-section hidden">
+        <div id="advancedKindsContainer"></div>
+        <div class="grid">
+          <div>
+            <label for="tags">Topics you can help with</label>
+            <input id="tags" type="text" placeholder="design, frontend, hiring">
+          </div>
+          <div>
+            <label for="note">Note</label>
+            <input id="note" type="text" placeholder="Happy to chat about anything">
+          </div>
         </div>
       </div>
 
-      <div class="row">
-        <button id="goBtn">I’m available</button>
-        <button id="extendBtn" class="ghost">+10m</button>
-        <button id="doneBtn" class="ghost">Done</button>
-        <button id="shareBtn" class="ghost">Share room link</button>
+      <div class="row" style="margin-top: 12px;">
+        <button id="shareBtn" class="ghost">Copy room link</button>
+        <span class="muted small" id="statusLine"></span>
       </div>
-      <div id="statusLine" class="muted"></div>
     </section>
 
+    <!-- Contact Methods -->
     <section class="card">
-      <div class="row">
-        <input id="filter" placeholder="Filter by name, type, tag, location…">
-        <div class="muted small" id="nowline"></div>
+      <div class="card-header">
+        <h2 class="section-title">How to reach you</h2>
+        <label class="checkbox-label small">
+          <input type="checkbox" id="saveContactMethods"> Save for next time
+        </label>
+      </div>
+      <p class="muted small" style="margin-bottom: 12px;">Add ways people can contact you with one click.</p>
+
+      <div id="contactMethodsContainer"></div>
+
+      <button id="addContactMethod" class="ghost small" style="margin-top: 8px;">+ Add contact method</button>
+    </section>
+
+    <!-- Set Availability -->
+    <section class="card">
+      <h2 class="section-title">Set your availability</h2>
+
+      <!-- Categories will be rendered here -->
+      <div id="categoriesContainer"></div>
+
+      <!-- Duration -->
+      <div class="category-section">
+        <label class="category-label">How long are you available?</label>
+        <div class="row">
+          <div class="durations">
+            <button type="button" class="dur" data-min="5">5m</button>
+            <button type="button" class="dur" data-min="15">15m</button>
+            <button type="button" class="dur" data-min="30">30m</button>
+            <button type="button" class="dur" data-min="60">1hr</button>
+          </div>
+          <div class="custom">
+            <input id="minutes" type="number" min="1" max="240" value="15">
+            <span class="muted">min</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" style="margin-top: 16px;">
+        <button id="goBtn">I'm available</button>
+        <button id="extendBtn" class="ghost">+10 min</button>
+        <button id="doneBtn" class="ghost">Done</button>
+      </div>
+      <p class="muted small" id="nowlineRoster"></p>
+    </section>
+
+    <!-- Availability Board -->
+    <section class="card">
+      <div class="card-header">
+        <h2 class="section-title">Available now</h2>
+        <input id="rosterFilter" type="search" placeholder="Filter...">
       </div>
       <div id="list"></div>
     </section>
+
+    <!-- Topics Section (Collapsible) -->
+    <details class="card">
+      <summary class="section-title clickable">Topics & Audio Responses</summary>
+
+      <div class="details-content">
+        <!-- Create Topic -->
+        <div class="subsection">
+          <h3 class="subsection-title">Start a discussion topic</h3>
+          <div class="grid">
+            <div>
+              <label for="topicTitle">Title</label>
+              <input id="topicTitle" type="text" placeholder="What should we prioritize?">
+            </div>
+            <div>
+              <label for="topicDue">Due (optional)</label>
+              <input id="topicDue" type="datetime-local">
+            </div>
+          </div>
+          <label for="topicPrompt">Context</label>
+          <textarea id="topicPrompt" placeholder="Share your thoughts..."></textarea>
+          <div class="row">
+            <label class="inline" for="topicMax">Max length</label>
+            <input id="topicMax" type="number" min="1" max="10" value="2" class="slim">
+            <span class="muted">min</span>
+            <button id="newTopicBtn">Create topic</button>
+          </div>
+        </div>
+
+        <!-- Record Response -->
+        <div class="subsection">
+          <h3 class="subsection-title">Record a response</h3>
+          <div class="grid">
+            <div>
+              <label for="responseTopic">Topic</label>
+              <select id="responseTopic"></select>
+            </div>
+            <div>
+              <label for="fileInput">Or upload audio</label>
+              <input id="fileInput" type="file" accept="audio/*">
+            </div>
+          </div>
+          <div class="row">
+            <button id="recordBtn">Record</button>
+            <button id="stopBtn" class="ghost" disabled>Stop</button>
+            <button id="submitResponseBtn" class="ghost" disabled>Submit</button>
+            <span class="muted small" id="recordStatus"></span>
+          </div>
+          <audio id="preview" controls class="audio-preview"></audio>
+        </div>
+
+        <!-- Topics List -->
+        <div class="subsection">
+          <div class="card-header">
+            <h3 class="subsection-title">All Topics</h3>
+            <input id="topicFilter" type="search" placeholder="Search...">
+          </div>
+          <span class="muted small" id="nowline"></span>
+          <div id="topicsList"></div>
+        </div>
+      </div>
+    </details>
   </main>
 
   <footer>
-    <div class="muted small">
-      Minimal demo. No logins. Data resets when the server restarts.
-    </div>
+    <p class="muted small">
+      Created by <a href="https://davidreinstein.org" target="_blank">David Reinstein</a>
+      with consultation from Nesim Sisa.
+    </p>
+    <p class="muted small">Data is stored in memory only and resets when the server restarts.</p>
   </footer>
 
   <script src="/socket.io/socket.io.js"></script>
   <script src="/app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js')
+        .then(reg => console.log('SW registered'))
+        .catch(err => console.log('SW failed:', err));
+    }
+  </script>
 </body>
 </html>
