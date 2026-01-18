@@ -5,8 +5,9 @@
  * - Auto-opens browser (mac/win/linux) unless running in Electron.
  */
 
-// Detect if running inside Electron
+// Detect if running inside Electron or cloud environment
 const isElectron = process.env.ELECTRON === '1';
+const isCloud = process.env.RENDER === 'true' || process.env.NODE_ENV === 'production';
 const fs = require('fs');
 const path = require('path');
 const { exec } = require('child_process');
@@ -274,17 +275,19 @@ function openBrowser(url) {
 }
 
 function startServer(port, triesLeft=5) {
+  // Bind to 0.0.0.0 for cloud, localhost for local dev
+  const host = isCloud ? '0.0.0.0' : 'localhost';
   server
-    .listen(port, () => {
+    .listen(port, host, () => {
       const url = `http://localhost:${port}`;
       console.log(`Who's Available running on ${url}`);
-      // Open the default browser once (unless in Electron)
-      if (!isElectron) {
+      // Open the default browser once (unless in Electron or cloud)
+      if (!isElectron && !isCloud) {
         openBrowser(url);
       }
     })
     .on('error', (err) => {
-      if (err && err.code === 'EADDRINUSE' && triesLeft > 0) {
+      if (err && err.code === 'EADDRINUSE' && triesLeft > 0 && !isCloud) {
         console.log(`Port ${port} in use. Trying ${port+1}...`);
         startServer(port + 1, triesLeft - 1);
       } else {
