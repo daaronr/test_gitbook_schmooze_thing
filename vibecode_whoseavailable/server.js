@@ -1,6 +1,7 @@
 /**
  * Who's Available — tiny realtime app
- * - No DB. In-memory.
+ * - Topics & responses persisted in SQLite (./data/schmooze.db).
+ * - User availability is ephemeral (in-memory, resets on restart).
  * - Auto-port fallback if 3000 is busy.
  * - Auto-opens browser (mac/win/linux) unless running in Electron.
  */
@@ -15,6 +16,7 @@ const express = require('express');
 const http = require('http');
 const multer = require('multer');
 const { Server } = require('socket.io');
+const db = require('./db');
 
 // Load availability types configuration
 const availabilityConfig = require('./config/availability-types.json');
@@ -34,7 +36,8 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, { cors: { origin: '*' } });
 
-const UPLOAD_DIR = path.join(__dirname, 'uploads');
+const STORAGE_DIR = process.env.STORAGE_DIR || null;
+const UPLOAD_DIR = STORAGE_DIR ? path.join(STORAGE_DIR, 'uploads') : path.join(__dirname, 'uploads');
 fs.mkdirSync(UPLOAD_DIR, { recursive: true });
 
 app.use(express.json({ limit: '1mb' }));
@@ -48,11 +51,9 @@ const upload = multer({
   limits: { fileSize: 25 * 1024 * 1024 } // 25MB per clip
 });
 
-// --- In-memory store ---
+// --- In-memory store (availability only — ephemeral by design) ---
 // rooms: { [room]: { users: Map<socketId, User> } }
 const rooms = new Map();
-const topics = []; // [{ id, title, prompt, dueAt, maxMinutes, room, createdBy, createdAt }]
-const responses = []; // [{ id, topicId, room, name, tags, note, audioUrl, duration, createdAt }]
 
 function getRoom(name='main') {
   if (!rooms.has(name)) rooms.set(name, { users: new Map() });
@@ -84,12 +85,11 @@ function emitRoster(roomName) {
 }
 
 function emitTopics(roomName='main') {
-  io.to(roomName).emit('topics', topics.filter(t => t.room === roomName));
+  io.to(roomName).emit('topics', db.getTopicsByRoom(roomName));
 }
 
 function emitResponses(roomName='main', topicId=null) {
-  const payload = responses.filter(r => r.room === roomName && (!topicId || r.topicId === topicId));
-  io.to(roomName).emit('responses', payload);
+  io.to(roomName).emit('responses', db.getResponsesByRoom(roomName, topicId));
 }
 
 // Expiry sweeper
@@ -132,8 +132,8 @@ io.on('connection', (socket) => {
     room.users.set(socket.id, user);
     emitRoster(roomName);
     // send topics/responses snapshot for the room
-    socket.emit('topics', topics.filter(t => t.room === roomName));
-    socket.emit('responses', responses.filter(r => r.room === roomName));
+    socket.emit('topics', db.getTopicsByRoom(roomName));
+    socket.emit('responses', db.getResponsesByRoom(roomName));
   });
 
   socket.on('set-available', (payload) => {
@@ -187,7 +187,7 @@ io.on('connection', (socket) => {
 // Topics API
 app.get('/api/topics', (req, res) => {
   const roomName = String(req.query.room || 'main');
-  res.json(topics.filter(t => t.room === roomName));
+  res.json(db.getTopicsByRoom(roomName));
 });
 
 app.post('/api/topics', (req, res) => {
@@ -208,9 +208,28 @@ app.post('/api/topics', (req, res) => {
     createdBy,
     createdAt: Date.now()
   };
-  topics.unshift(topic);
+  db.insertTopic(topic);
   emitTopics(roomName);
   res.json(topic);
+});
+
+// Delete a topic (and its responses via CASCADE)
+app.delete('/api/topics/:id', (req, res) => {
+  const topic = db.getTopicById(req.params.id);
+  if (!topic) return res.status(404).json({ error: 'Not found' });
+  db.deleteTopic(topic.id);
+  emitTopics(topic.room);
+  emitResponses(topic.room);
+  res.json({ ok: true });
+});
+
+// Delete a response
+app.delete('/api/responses/:id', (req, res) => {
+  const resp = db.getResponseById(req.params.id);
+  if (!resp) return res.status(404).json({ error: 'Not found' });
+  db.deleteResponse(resp.id);
+  emitResponses(resp.room, resp.topicId);
+  res.json({ ok: true });
 });
 
 // Upload audio clip
@@ -228,13 +247,12 @@ app.post('/api/upload', upload.single('audio'), (req, res) => {
 app.get('/api/responses', (req, res) => {
   const roomName = String(req.query.room || 'main');
   const topicId = req.query.topicId ? String(req.query.topicId) : null;
-  const list = responses.filter(r => r.room === roomName && (!topicId || r.topicId === topicId));
-  res.json(list);
+  res.json(db.getResponsesByRoom(roomName, topicId));
 });
 
 app.post('/api/responses', (req, res) => {
   const topicId = String(req.body.topicId || '').trim();
-  const topic = topics.find(t => t.id === topicId);
+  const topic = db.getTopicById(topicId);
   if (!topic) return res.status(400).json({ error: 'Unknown topic' });
   const roomName = topic.room;
   const name = String(req.body.name || '').trim().slice(0, 64);
@@ -256,7 +274,7 @@ app.post('/api/responses', (req, res) => {
     duration,
     createdAt: Date.now()
   };
-  responses.push(response);
+  db.insertResponse(response);
   emitResponses(roomName, topicId);
   res.json(response);
 });

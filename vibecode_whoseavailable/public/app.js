@@ -426,6 +426,7 @@ function renderTopics() {
       <div class="response">
         <div>
           <strong>${esc(r.name)}</strong> <span class="muted small">${timeAgo(r.createdAt)}</span>
+          <button class="ghost small del-resp" data-id="${r.id}" title="Delete response">✕</button>
           ${r.note ? `<div class="muted small">${esc(r.note)}</div>` : ''}
         </div>
         <audio controls src="${r.audioUrl}" class="slim-audio"></audio>
@@ -442,6 +443,7 @@ function renderTopics() {
           <div class="badges">
             <span class="badge">${resp.length} responses</span>
             <button class="ghost small" data-play="${t.id}">▶ Play all</button>
+            <button class="ghost small del-topic" data-id="${t.id}" title="Delete topic">🗑</button>
           </div>
         </div>
         <div class="responses">${respHtml || '<div class="muted small">No responses yet.</div>'}</div>
@@ -453,6 +455,38 @@ function renderTopics() {
   if (container) {
     container.innerHTML = html || '<div class="muted">No topics yet.</div>';
     $$('button[data-play]').forEach((btn) => btn.onclick = () => playAssembled(btn.dataset.play));
+    $$('.del-topic').forEach((btn) => btn.onclick = () => deleteTopic(btn.dataset.id));
+    $$('.del-resp').forEach((btn) => btn.onclick = () => deleteResponse(btn.dataset.id));
+  }
+}
+
+async function deleteTopic(topicId) {
+  if (!confirm('Delete this topic and all its responses?')) return;
+  try {
+    const res = await fetch(`/api/topics/${topicId}`, { method: 'DELETE' });
+    if (!res.ok) throw new Error('Failed');
+    topics = topics.filter(t => t.id !== topicId);
+    responses = responses.filter(r => r.topicId !== topicId);
+    renderTopics();
+    syncTopicDropdown();
+    toast('Topic deleted');
+  } catch (err) {
+    console.error(err);
+    toast('Could not delete topic');
+  }
+}
+
+async function deleteResponse(responseId) {
+  if (!confirm('Delete this response?')) return;
+  try {
+    const res = await fetch(`/api/responses/${responseId}`, { method: 'DELETE' });
+    if (!res.ok) throw new Error('Failed');
+    responses = responses.filter(r => r.id !== responseId);
+    renderTopics();
+    toast('Response deleted');
+  } catch (err) {
+    console.error(err);
+    toast('Could not delete response');
   }
 }
 
@@ -529,11 +563,14 @@ async function submitResponse() {
 
   try {
     const uploadUrl = await uploadClip(recordedBlob);
-    const payload = { topicId, name: ident.name, room: ident.room, tags: ident.tags, note: ident.note, audioUrl: uploadUrl, duration: 0 };
+    const duration = parseInt($('#preview').dataset.duration || '0', 10);
+    const payload = { topicId, name: ident.name, room: ident.room, tags: ident.tags, note: ident.note, audioUrl: uploadUrl, duration };
     const res = await fetch('/api/responses', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
     if (!res.ok) throw new Error('Save failed');
     recordedBlob = null;
     $('#preview').src = '';
+    $('#preview').dataset.duration = '0';
+    if ($('#fileInput')) $('#fileInput').value = '';
     $('#submitResponseBtn').disabled = true;
     $('#recordStatus').textContent = 'Submitted!';
     toast('Response saved');
@@ -553,7 +590,11 @@ async function uploadClip(blob) {
 
 function updatePreview(blob) {
   if (!blob) return;
-  $('#preview').src = URL.createObjectURL(blob);
+  const preview = $('#preview');
+  preview.src = URL.createObjectURL(blob);
+  preview.onloadedmetadata = () => {
+    preview.dataset.duration = Math.round(preview.duration) || 0;
+  };
 }
 
 // === ROSTER ===

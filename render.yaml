@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: whos-available
+    runtime: node
+    rootDir: vibecode_whoseavailable
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: RENDER
+        value: "true"
+      - key: STORAGE_DIR
+        value: /opt/render/project/src/storage
+    disk:
+      name: schmooze-storage
+      mountPath: /opt/render/project/src/storage
+      sizeGB: 1

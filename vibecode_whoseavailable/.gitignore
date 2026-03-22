@@ -16,6 +16,9 @@ Thumbs.db
 # Uploads (user content)
 uploads/
 
+# SQLite database
+data/
+
 # Editor
 .vscode/
 .idea/

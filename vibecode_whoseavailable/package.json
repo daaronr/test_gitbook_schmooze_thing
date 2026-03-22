@@ -15,6 +15,7 @@
     "dist:linux": "electron-builder --linux"
   },
   "dependencies": {
+    "better-sqlite3": "^12.8.0",
     "bufferutil": "^4.0.9",
     "express": "^4.19.2",
     "multer": "^1.4.5-lts.1",
