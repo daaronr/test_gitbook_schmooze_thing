@@ -1,5 +1,5 @@
 // Bump this version when static assets change to clear old caches
-const CACHE_VERSION = 2;
+const CACHE_VERSION = 3;
 const CACHE_NAME = `whos-available-v${CACHE_VERSION}`;
 const STATIC_ASSETS = [
   '/',

@@ -72,6 +72,7 @@ function publicRoster(room) {
       tags: u.tags,
       location: u.location,
       note: u.note,
+      contactMethods: u.contactMethods || [],
       availableUntil: u.availableUntil,
       updatedAt: u.updatedAt
     }));
@@ -126,6 +127,7 @@ io.on('connection', (socket) => {
       tags: String(payload.tags || '').slice(0, 80),
       location: String(payload.location || '').slice(0, 160),
       note: String(payload.note || '').slice(0, 160),
+      contactMethods: Array.isArray(payload.contactMethods) ? payload.contactMethods.slice(0, 5) : [],
       availableUntil: null,
       updatedAt: now
     };
@@ -147,6 +149,7 @@ io.on('connection', (socket) => {
     if (typeof payload.tags === 'string') u.tags = String(payload.tags).slice(0,80);
     if (typeof payload.location === 'string') u.location = String(payload.location).slice(0,160);
     if (typeof payload.note === 'string') u.note = String(payload.note).slice(0,160);
+    if (Array.isArray(payload.contactMethods)) u.contactMethods = payload.contactMethods.slice(0, 5);
 
     u.availableUntil = now + minutes * 60 * 1000;
     u.updatedAt = now;
