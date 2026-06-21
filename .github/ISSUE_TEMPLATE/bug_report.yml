@@ -1,0 +1,50 @@
+name: Bug report
+description: Something in the app does not work the way you expected.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for reporting. The more specific you are, the faster it can be fixed.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you do, and what went wrong?
+      placeholder: I tapped "FaceTime" on someone's card and nothing opened.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect instead?
+      placeholder: FaceTime should have opened with their number.
+    validations:
+      required: false
+  - type: dropdown
+    id: device
+    attributes:
+      label: Device
+      options:
+        - iPhone / iPad
+        - Android phone or tablet
+        - Mac
+        - Windows
+        - Linux
+        - Other / not sure
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: Browser
+      placeholder: Safari, Chrome, Firefox, in-app browser, etc.
+    validations:
+      required: false
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else?
+      description: Screenshots, the room name, or steps to reproduce all help.
+    validations:
+      required: false

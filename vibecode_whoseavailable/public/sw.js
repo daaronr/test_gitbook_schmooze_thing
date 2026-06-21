@@ -1,5 +1,5 @@
 // Bump this version when static assets change to clear old caches
-const CACHE_VERSION = 20;
+const CACHE_VERSION = 21;
 const CACHE_NAME = `whos-available-v${CACHE_VERSION}`;
 const SCOPE_URL = new URL(self.registration.scope);
 const STATIC_ASSETS = [
@@ -8,6 +8,7 @@ const STATIC_ASSETS = [
   'app.js',
   'styles.css',
   'walkthrough.html',
+  'status.html',
   'manifest.json',
   'icons/icon-192.png',
   'icons/icon-512.png',

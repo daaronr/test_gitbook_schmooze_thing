@@ -51,11 +51,15 @@ function loadProfile() {
 
 function saveLocal() {
   saveProfile();
+  // Remembering reach links is on by default; users can opt out for a shared
+  // device. We persist the preference itself so the choice sticks.
+  const saveContacts = $('#saveContactMethods') ? $('#saveContactMethods').checked : true;
   const data = {
     name: getName(),
     room: getRoom(),
     darkMode: document.body.classList.contains('dark-mode'),
-    contactMethods: $('#saveContactMethods')?.checked ? userContactMethods : [],
+    saveContacts,
+    contactMethods: saveContacts ? userContactMethods.filter(m => m.type && m.value) : [],
     selectedMinutes: getSelectedMinutes(),
     selectedAudience,
     selectedCallLength,
@@ -72,9 +76,12 @@ function loadLocal() {
     if (savedName) $('#name').value = savedName;
     if (data.room) $('#room').value = data.room;
     if (data.darkMode) document.body.classList.add('dark-mode');
+    // Default to remembering reach links unless the user previously opted out.
+    if ($('#saveContactMethods')) {
+      $('#saveContactMethods').checked = data.saveContacts !== false;
+    }
     if (Array.isArray(data.contactMethods) && data.contactMethods.length > 0) {
       userContactMethods = data.contactMethods;
-      if ($('#saveContactMethods')) $('#saveContactMethods').checked = true;
     }
     if (data.selectedMinutes) {
       setDuration(data.selectedMinutes);
@@ -1576,6 +1583,9 @@ function bind() {
     userContactMethods.push({ type: '', value: '' });
     renderContactMethodsUI();
   });
+
+  // Persist the remember-reach-links choice as soon as it changes.
+  $('#saveContactMethods')?.addEventListener('change', saveLocal);
 
   // Share/invite
   $('#shareBtn')?.addEventListener('click', () => {

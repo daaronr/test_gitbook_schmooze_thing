@@ -2,6 +2,8 @@
 
 A tiny realtime page to show **who’s available**, **for what kind of chat**, and **for how long**.
 
+**Live app:** https://info.unjournal.org/available/ · **[What works / what's next](https://info.unjournal.org/available/status.html)** · **[Suggest an idea or report a bug](https://github.com/daaronr/test_gitbook_schmooze_thing/issues/new/choose)**
+
 - No accounts, no database — just open the page and click “I’m available”.
 - Works well for hack days, conferences, coworking, or office hours.
 - Optional **rooms** via `?r=room-name` so you can split groups.
