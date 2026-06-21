@@ -32,6 +32,12 @@ function validateKinds(kinds) {
     .slice(0, availabilityConfig.maxSelections);
 }
 
+function clampMinutes(value, fallback=15) {
+  const parsed = parseInt(value, 10);
+  if (!Number.isFinite(parsed)) return fallback;
+  return Math.max(1, Math.min(240, parsed));
+}
+
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, { cors: { origin: '*' } });
@@ -72,6 +78,8 @@ function publicRoster(room) {
       tags: u.tags,
       location: u.location,
       note: u.note,
+      callLength: u.callLength,
+      conversationNote: u.conversationNote,
       contactMethods: u.contactMethods || [],
       availableUntil: u.availableUntil,
       updatedAt: u.updatedAt
@@ -127,6 +135,8 @@ io.on('connection', (socket) => {
       tags: String(payload.tags || '').slice(0, 80),
       location: String(payload.location || '').slice(0, 160),
       note: String(payload.note || '').slice(0, 160),
+      callLength: clampMinutes(payload.callLength, 15),
+      conversationNote: String(payload.conversationNote || '').trim().slice(0, 1000),
       contactMethods: Array.isArray(payload.contactMethods) ? payload.contactMethods.slice(0, 5) : [],
       availableUntil: null,
       updatedAt: now
@@ -141,7 +151,7 @@ io.on('connection', (socket) => {
   socket.on('set-available', (payload) => {
     const room = getRoom(roomName);
     if (!room.users.has(socket.id)) return;
-    const minutes = Math.max(1, Math.min(240, parseInt(payload.minutes || 15, 10)));
+    const minutes = clampMinutes(payload.minutes, 15);
     const now = Date.now();
     const u = room.users.get(socket.id);
     // allow updating profile fields at the same time
@@ -149,6 +159,8 @@ io.on('connection', (socket) => {
     if (typeof payload.tags === 'string') u.tags = String(payload.tags).slice(0,80);
     if (typeof payload.location === 'string') u.location = String(payload.location).slice(0,160);
     if (typeof payload.note === 'string') u.note = String(payload.note).slice(0,160);
+    if (payload.callLength) u.callLength = clampMinutes(payload.callLength, 15);
+    if (typeof payload.conversationNote === 'string') u.conversationNote = String(payload.conversationNote || '').trim().slice(0,1000);
     if (Array.isArray(payload.contactMethods)) u.contactMethods = payload.contactMethods.slice(0, 5);
 
     u.availableUntil = now + minutes * 60 * 1000;
@@ -156,10 +168,25 @@ io.on('connection', (socket) => {
     emitRoster(roomName);
   });
 
+  socket.on('update-availability', (payload) => {
+    const room = getRoom(roomName);
+    if (!room.users.has(socket.id)) return;
+    const u = room.users.get(socket.id);
+    if (payload.kinds) u.kinds = validateKinds(payload.kinds);
+    if (typeof payload.tags === 'string') u.tags = String(payload.tags).slice(0,80);
+    if (typeof payload.location === 'string') u.location = String(payload.location).slice(0,160);
+    if (typeof payload.note === 'string') u.note = String(payload.note).slice(0,160);
+    if (payload.callLength) u.callLength = clampMinutes(payload.callLength, 15);
+    if (typeof payload.conversationNote === 'string') u.conversationNote = String(payload.conversationNote || '').trim().slice(0,1000);
+    if (Array.isArray(payload.contactMethods)) u.contactMethods = payload.contactMethods.slice(0, 5);
+    u.updatedAt = Date.now();
+    emitRoster(roomName);
+  });
+
   socket.on('extend', (payload) => {
     const room = getRoom(roomName);
     if (!room.users.has(socket.id)) return;
-    const addMin = Math.max(1, Math.min(240, parseInt(payload.minutes || 10, 10)));
+    const addMin = clampMinutes(payload.minutes, 10);
     const now = Date.now();
     const u = room.users.get(socket.id);
     if (!u.availableUntil || u.availableUntil < now) {
@@ -177,6 +204,20 @@ io.on('connection', (socket) => {
     const u = room.users.get(socket.id);
     u.availableUntil = null;
     u.updatedAt = Date.now();
+    emitRoster(roomName);
+  });
+
+  socket.on('start-conversation', (payload) => {
+    const room = getRoom(roomName);
+    const targetId = String(payload?.targetId || '').slice(0, 120);
+    if (!targetId || !room.users.has(targetId)) return;
+    const target = room.users.get(targetId);
+    target.availableUntil = null;
+    target.updatedAt = Date.now();
+    io.to(targetId).emit('availability-ended', {
+      reason: 'conversation-started',
+      by: user?.name || ''
+    });
     emitRoster(roomName);
   });
 
@@ -201,6 +242,8 @@ app.post('/api/topics', (req, res) => {
   const maxMinutes = Math.max(1, Math.min(240, parseInt(req.body.maxMinutes || 5, 10)));
   const dueAt = req.body.dueAt ? Date.parse(req.body.dueAt) : null;
   const createdBy = String(req.body.createdBy || '').trim().slice(0, 80) || 'anon';
+  const recentDuplicate = db.getRecentDuplicateTopic(roomName, title, prompt, createdBy, Date.now() - 5000);
+  if (recentDuplicate) return res.json(recentDuplicate);
   const topic = {
     id: `t_${Date.now()}_${Math.random().toString(16).slice(2,6)}`,
     title,

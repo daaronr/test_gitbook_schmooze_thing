@@ -1,10 +1,11 @@
-# Who's Available — minimal app
+# The Big Schmooze — async topic + audio drops
 
-A tiny realtime page to show **who’s available**, **for what kind of chat**, and **for how long**.
+A minimal MVP where people create topics, drop short voice clips, and play a stitched stream whenever they have time.
 
-- No accounts, no database — just open the page and click “I’m available”.
-- Works well for hack days, conferences, coworking, or office hours.
-- Optional **rooms** via `?r=room-name` so you can split groups.
+- No accounts, in-memory store. Share a **room** via `?r=room-name` to keep groups separate.
+- Create a topic with a prompt and optional due time; participants record or upload a clip.
+- Stitched playback plays responses in arrival order; data resets on server restart.
+- Product background and use cases: `ProjectLink_aka_schmooze/bigschmooze.md` (plus wireframes in `wireframes/`).
 
 ## Run it (Mac/Linux/Windows)
 
@@ -14,27 +15,19 @@ npm start
 # It auto-opens your browser to http://localhost:3000 (or the next free port)
 ```
 
-## Use it with others
+## What people do on the page (MVP)
 
-- **Same Wi‑Fi:** Share your LAN IP and port, e.g. `http://192.168.1.23:3000`.
-- **Public link:** Use a tunnel (e.g. `ngrok http 3000`) and share the https URL.
-- **Rooms:** Append `?r=hallway-a` and share that link to put everyone in the same room.
-
-## What people do on the page
-
-1. Type your **name** (and optionally a **room** name).
-2. Tick what kind of chat you’re up for (quick hello, coffee, technical, brainstorm).
-3. Set **how long** (10/15/30/60 or custom minutes).
-4. Optionally add **location/link** and a short **note**.
-5. Click **“I’m available”**.
-6. Your card shows up to everyone with a live **countdown**. You can **extend +10m** or mark **Done**.
+1. Set your **name** and **room** (shareable link via “Share room link”).
+2. **Create a topic**: title, prompt/context, optional due time, and max clip length.
+3. **Respond**: pick a topic, record or upload a short audio clip, and submit.
+4. **Play stitched**: per topic, play responses sequentially in arrival order.
+5. Optional: filter topics/responses by keyword.
 
 ## Tech
 
-- Node.js + Express + Socket.IO
-- In‑memory store (resets when server restarts)
-- Auto‑port fallback if 3000 is in use
-- Auto‑opens your default browser when the server starts
+- Node.js + Express + Socket.IO, in-memory store
+- Uploads saved to `uploads/` on disk (not persisted across redeploys)
+- Auto-port fallback if 3000 is in use; auto-opens browser on start
 
 ## Local development tips
 

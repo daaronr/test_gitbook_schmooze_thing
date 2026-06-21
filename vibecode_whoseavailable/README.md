@@ -20,6 +20,27 @@ npm start
 - **Public link:** Use a tunnel (e.g. `ngrok http 3000`) and share the https URL.
 - **Rooms:** Append `?r=hallway-a` and share that link to put everyone in the same room.
 
+## Deploy it publicly
+
+This app needs a real Node process because it uses Socket.IO, so static hosts are not a fit.
+
+### Render
+
+This repo includes `render.yaml` for a straightforward deploy:
+
+1. Connect the repo in Render.
+2. Create the web service from `render.yaml`.
+3. Keep the attached disk so uploads and SQLite data survive restarts.
+
+Render settings used by the blueprint:
+
+- Start command: `npm start`
+- Health check: `/api/health`
+- Persistent disk mount: `/var/data`
+- Storage env var: `STORAGE_DIR=/var/data`
+
+Availability remains intentionally in-memory, so the live roster clears on restart even though topics, responses, and uploads persist.
+
 ## What people do on the page
 
 1. Type your **name** (and optionally a **room** name).

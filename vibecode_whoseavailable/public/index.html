@@ -2,32 +2,37 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="description" content="See who's available for a chat, right now.">
   <title>Who's Available</title>
 
   <!-- PWA -->
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#ffffff">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#16745c">
   <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="Available">
-  <link rel="apple-touch-icon" href="/icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="/icons/icon.svg">
-  <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
+  <link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
 
-  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-  <!-- Minimal top bar -->
   <header>
     <div class="header-inner">
-      <h1>Who's Available</h1>
+      <div>
+        <p class="eyebrow">Live room</p>
+        <h1>Who's Available</h1>
+      </div>
       <div class="header-actions">
-        <button id="settingsToggle" class="icon-btn" title="Settings">
+        <a class="guide-link" href="walkthrough.html" target="_blank" rel="noopener" title="Open a short walkthrough" data-tooltip="Open the fuller guide if you want it. The main controls also explain themselves on hover.">How to use</a>
+        <span class="comment-pill" title="Use the Hypothes.is sidebar on the right to comment on this interface" data-tooltip="Open the Hypothes.is sidebar or select page text to leave feedback on the interface.">Hypothes.is comments on</span>
+        <button id="settingsToggle" class="icon-btn" title="Room, name, and reach-link settings" data-tooltip="Set your saved name, room, and one-click reach links." aria-label="Room, name, and reach-link settings">
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="10" cy="10" r="3"/><path d="M10 1v2m0 14v2m-9-9h2m14 0h2m-3.3-5.3-1.4 1.4m-8.6 8.6-1.4 1.4m0-11.4 1.4 1.4m8.6 8.6 1.4 1.4"/></svg>
         </button>
       </div>
@@ -40,30 +45,58 @@
     <section id="setupPanel" class="panel setup-panel hidden">
       <div class="setup-grid">
         <div>
-          <label for="name">Your name</label>
-          <input id="name" type="text" placeholder="Your name" autocomplete="name">
+          <label for="name">Display name</label>
+          <input id="name" type="text" placeholder="Your name" autocomplete="name" title="Saved on this device for every availability you create" data-tooltip="Saved on this device so you do not need to re-enter it for each availability card.">
         </div>
         <div>
-          <label for="room">Group</label>
-          <input id="room" type="text" placeholder="main" value="main">
+          <label for="room">Room</label>
+          <input id="room" type="text" placeholder="main" value="main" maxlength="32" title="Room name" data-tooltip="Only people using the same room link see the same board. Use Copy invite link to share it.">
         </div>
       </div>
 
       <!-- Contact methods -->
-      <details class="setup-details">
-        <summary>Contact methods</summary>
+      <details class="setup-details" open>
+        <summary title="Set direct links people can click from your card" data-tooltip="Add direct phone, WhatsApp, video, email, or custom links. The first usable link becomes the big card button.">One-click reach links</summary>
+        <p class="setup-hint">Add at least one direct way people can reach you. Phone, SMS/iMessage, FaceTime, WhatsApp, Zoom, Meet, Teams, Signal, Telegram, email, scheduling, and safe app links are supported. The first usable link becomes the big button on your card.</p>
         <div id="contactMethodsContainer"></div>
-        <button id="addContactMethod" class="link-btn">+ Add method</button>
+        <button id="addContactMethod" class="link-btn" title="Add another direct contact option" data-tooltip="Add another way people can reach you, such as WhatsApp, phone, email, Zoom, or Meet.">+ Add reach link</button>
         <label class="check-label">
-          <input type="checkbox" id="saveContactMethods"> Remember these
+          <input type="checkbox" id="saveContactMethods" title="Remember these reach links locally" data-tooltip="When checked, this browser remembers your reach links for future availability cards."> Save reach links on this device
         </label>
       </details>
 
       <div class="setup-actions">
-        <button id="shareBtn" class="secondary-btn">Copy invite link</button>
-        <button id="darkModeToggle" class="secondary-btn" title="Toggle dark mode">Dark mode</button>
+        <button id="shareBtn" class="secondary-btn" title="Copy a link to this room" data-tooltip="Copies a shareable link to the current room so others land on the same board.">Copy invite link</button>
+        <button id="darkModeToggle" class="secondary-btn" title="Switch between light and dark appearance" data-tooltip="Switch this browser between light and dark appearance.">Dark mode</button>
       </div>
     </section>
+
+    <details class="panel guide-panel">
+      <summary class="guide-summary" title="Open the quick usage guide" data-tooltip="A short in-page summary. You can use the app without opening the full manual.">How this works</summary>
+      <div class="guide-copy">
+        <p><strong>Available</strong> means what you are open to doing now. <strong>Visible</strong> means how long your card stays on this room board.</p>
+        <p>Pick what you are available for, choose 1:1 or speakerphone/group, then set the suggested conversation length and board visibility time separately.</p>
+        <p>Add a visible conversation note if you want people to know what you want to talk about.</p>
+        <p>Use <strong>Preview my card</strong> to see the version people can see before you publish it.</p>
+        <p>Your display name is saved on this device. Before you publish availability, the app asks for a direct one-click reach link if you have not added one yet.</p>
+        <p>Tapping a reach button opens the right app on your device (dialer, FaceTime, WhatsApp, Meet, email, and so on). The person stays on the board, so a call that does not connect never removes them. After tapping, a quick prompt lets you mark them busy, keep them visible, or copy their contact as a fallback.</p>
+        <p>Use <strong>Mark busy</strong> to take someone off Free now manually.</p>
+        <p>Use <strong>Copy invite link</strong> to share the room. Availability clears automatically; topics and voice prompts are optional.</p>
+        <p><strong>Comments:</strong> Hypothes.is is enabled on this interface. Open the sidebar or select text to leave feedback on the page.</p>
+        <a href="walkthrough.html" target="_blank" rel="noopener">Open the full walkthrough</a>
+      </div>
+    </details>
+
+    <details class="panel guide-panel purpose-panel">
+      <summary class="guide-summary" title="Why this app exists" data-tooltip="Explains the point of the app and the reasoning behind its design.">Why this exists</summary>
+      <div class="guide-copy">
+        <p>The point is to make informal conversation easier to start without turning it into calendar work.</p>
+        <p>Most people are not generally “available” or “unavailable.” They may be open to a quick call, a drive-time chat, a text exchange, or a focused 1:1 for a short window. This board lets people signal that specific window clearly.</p>
+        <p>The design keeps availability temporary on purpose. A card should mean “try me now,” not “I once said I was open to talking.”</p>
+        <p>One-click reach links matter because seeing that someone is free is only useful if you can actually reach them immediately.</p>
+        <p>Conversation notes and async prompts are here to reduce awkwardness: they give people a reason to start, and later they can support better matching by topic or intent.</p>
+      </div>
+    </details>
 
     <!-- Status banner (shows when you're available) -->
     <div id="statusBanner" class="status-banner hidden">
@@ -72,77 +105,137 @@
         <span id="statusTimer" class="status-timer"></span>
       </div>
       <div class="status-actions">
-        <button id="extendBtn" class="pill-btn">+10 min</button>
-        <button id="doneBtn" class="pill-btn done-btn">Done</button>
+        <button id="extendBtn" class="pill-btn" title="Keep your availability visible 10 minutes longer" data-tooltip="Adds 10 minutes to how long your card stays visible on this board.">Add 10 min</button>
+        <button id="doneBtn" class="pill-btn done-btn" title="Remove yourself from the free-now list" data-tooltip="Immediately remove your card from Free now.">Stop sharing</button>
       </div>
     </div>
 
     <!-- Quick-tap availability (the hero) -->
     <section id="availabilitySection" class="panel">
+      <div class="availability-header">
+        <div>
+          <p class="eyebrow">Open a window</p>
+          <h2>I'm available for</h2>
+        </div>
+        <div class="room-chip">Room: <span id="roomLabel">main</span></div>
+      </div>
+      <div id="reachReadiness" class="reach-readiness" aria-live="polite"></div>
       <div id="quickTaps" class="quick-taps">
         <!-- Rendered by JS from config -->
       </div>
 
-      <!-- Duration override (small, tucked under) -->
-      <div class="duration-row">
-        <span class="duration-label">Duration:</span>
-        <div class="duration-pills">
-          <button type="button" class="dur-pill" data-min="5">5m</button>
-          <button type="button" class="dur-pill active" data-min="15">15m</button>
-          <button type="button" class="dur-pill" data-min="30">30m</button>
-          <button type="button" class="dur-pill" data-min="60">1h</button>
+      <div class="audience-row" aria-label="Call format">
+        <span class="duration-label">Call format</span>
+        <div class="audience-pills">
+          <button type="button" class="audience-pill active" data-audience="one-to-one" title="Show that you prefer a 1:1 conversation" data-tooltip="Your card says you prefer a direct one-to-one conversation.">1:1</button>
+          <button type="button" class="audience-pill" data-audience="speakerphone-group" title="Show that speakerphone or a group conversation is okay" data-tooltip="Your card says you are open to speakerphone or a small group joining.">Speakerphone/group</button>
         </div>
       </div>
+
+      <div class="call-length-row" aria-label="Suggested conversation length">
+        <span class="duration-label">Suggested conversation length</span>
+        <div class="call-length-pills">
+          <button type="button" class="call-length-pill" data-call-min="5" title="Suggest a 5 minute conversation" data-tooltip="Tell people you are aiming for a 5 minute conversation.">5m</button>
+          <button type="button" class="call-length-pill active" data-call-min="15" title="Suggest a 15 minute conversation" data-tooltip="Tell people you are aiming for a 15 minute conversation.">15m</button>
+          <button type="button" class="call-length-pill" data-call-min="20" title="Suggest a 20 minute conversation" data-tooltip="Tell people you are aiming for a 20 minute conversation.">20m</button>
+          <button type="button" class="call-length-pill" data-call-min="30" title="Suggest a 30 minute conversation" data-tooltip="Tell people you are aiming for a 30 minute conversation.">30m</button>
+          <button type="button" class="call-length-pill" data-call-min="45" title="Suggest a 45 minute conversation" data-tooltip="Tell people you are aiming for a 45 minute conversation.">45m</button>
+          <button type="button" class="call-length-pill" data-call-min="60" title="Suggest a 1 hour conversation" data-tooltip="Tell people you are aiming for a 1 hour conversation. This is not the visibility timer.">1h</button>
+        </div>
+      </div>
+
+      <!-- Visibility duration override (small, tucked under) -->
+      <div class="duration-row">
+        <span class="duration-label">Visible on board for</span>
+        <div class="duration-pills">
+          <button type="button" class="dur-pill" data-min="5" title="Keep your card visible for 5 minutes" data-tooltip="Your card disappears from this board after 5 minutes unless you extend it.">5m</button>
+          <button type="button" class="dur-pill active" data-min="15" title="Keep your card visible for 15 minutes" data-tooltip="Your card disappears from this board after 15 minutes unless you extend it.">15m</button>
+          <button type="button" class="dur-pill" data-min="30" title="Keep your card visible for 30 minutes" data-tooltip="Your card disappears from this board after 30 minutes unless you extend it.">30m</button>
+          <button type="button" class="dur-pill" data-min="60" title="Keep your card visible for 1 hour" data-tooltip="Your card disappears from this board after 1 hour unless you extend it.">1h</button>
+        </div>
+      </div>
+
+      <div class="conversation-note-row">
+        <label for="conversationNote">What I want to talk about</label>
+        <textarea id="conversationNote" maxlength="1000" rows="4" placeholder="Optional: add a sentence or paragraph people can see on your availability card. For example: I want to talk through the project plan, or I'm open to a quick social catch-up." title="Visible to everyone in this room while you are available" data-tooltip="This appears on your public card in this room while you are available."></textarea>
+        <div class="field-hint">Visible on your card. Later this can be used for matching people by topic.</div>
+      </div>
+
+      <div class="preview-row">
+        <button type="button" id="previewCardBtn" class="secondary-btn" title="Preview how your availability card appears to people who can see it" data-tooltip="Shows exactly what your card will look like before you publish or update it.">Preview my card</button>
+        <span class="field-hint">Current general viewer preview. Group-specific previews can be added later.</span>
+      </div>
+    </section>
+
+    <section id="cardPreviewPanel" class="panel preview-panel hidden" aria-live="polite">
+      <div class="panel-header">
+        <div>
+          <p class="eyebrow">Visibility preview</p>
+          <h2>What people see</h2>
+        </div>
+        <button type="button" id="closePreviewBtn" class="secondary-btn small-action" title="Close the preview" data-tooltip="Hide the preview panel.">Close</button>
+      </div>
+      <div class="field-hint">This preview only shows the card for someone who is allowed to see you. It does not reveal future group visibility rules.</div>
+      <div id="cardPreview"></div>
     </section>
 
     <!-- Roster: who's available now -->
     <section class="panel">
       <div class="panel-header">
-        <h2>Available now</h2>
+        <h2>Free now</h2>
         <span id="rosterCount" class="count-badge">0</span>
       </div>
       <div id="list"></div>
     </section>
 
-    <!-- Topics & Audio (collapsed) -->
+    <!-- Optional voice prompts -->
     <details class="panel topics-panel">
-      <summary class="panel-header clickable">
-        <h2>Topics & Audio</h2>
+      <summary class="panel-header clickable" title="Optional async voice area" data-tooltip="Optional: create prompts people can answer with short recorded or uploaded audio clips.">
+        <h2>Async voice prompts</h2>
         <span id="topicCount" class="count-badge">0</span>
       </summary>
 
       <div class="topics-content">
         <!-- Create Topic -->
         <div class="topic-form">
-          <input id="topicTitle" type="text" placeholder="New discussion topic...">
+          <input id="topicTitle" type="text" placeholder="Question or prompt" title="Prompt title" data-tooltip="Create an optional prompt for async audio responses in this room.">
           <details class="topic-extras">
-            <summary class="link-btn">More options</summary>
-            <textarea id="topicPrompt" placeholder="Add context..."></textarea>
+            <summary class="link-btn" title="Show optional prompt settings" data-tooltip="Add context, a due date, or a suggested max response length.">More options</summary>
+            <textarea id="topicPrompt" placeholder="Add context..." title="Prompt context" data-tooltip="Optional extra context people see before recording a response."></textarea>
             <div class="topic-options-row">
-              <input id="topicDue" type="datetime-local" placeholder="Due date">
+              <input id="topicDue" type="datetime-local" placeholder="Due date" title="Optional due date" data-tooltip="Optional deadline or target time for responses.">
               <div class="inline-field">
                 <label for="topicMax">Max</label>
-                <input id="topicMax" type="number" min="1" max="10" value="2" class="slim-input">
+                <input id="topicMax" type="number" min="1" max="10" value="2" class="slim-input" title="Suggested max response length" data-tooltip="Suggested maximum clip length, in minutes.">
                 <span class="muted">min</span>
               </div>
             </div>
           </details>
-          <button id="newTopicBtn" class="primary-btn full-width">Create topic</button>
+          <button id="newTopicBtn" class="primary-btn full-width" title="Create an optional voice prompt for this room" data-tooltip="Create this prompt so people in the room can leave audio responses.">Start prompt</button>
         </div>
 
         <!-- Record Response -->
         <div class="record-section">
+          <div class="record-section-header">
+            <div>
+              <p class="eyebrow">Add a voice response</p>
+              <h3>Choose which prompt this clip answers</h3>
+            </div>
+            <span id="selectedTopicBadge" class="badge-sm">No prompt selected</span>
+          </div>
           <div class="record-row">
-            <select id="responseTopic" class="topic-select"></select>
+            <label for="responseTopic">Responding to</label>
+            <select id="responseTopic" class="topic-select" title="Choose prompt to answer" data-tooltip="Choose which prompt your recording or upload will answer."></select>
+            <div id="responseTopicHint" class="field-hint">Create a prompt above, then choose it here before recording or uploading a clip.</div>
           </div>
           <div class="record-controls">
-            <button id="recordBtn" class="record-btn">Record</button>
-            <button id="stopBtn" class="secondary-btn" disabled>Stop</button>
-            <label class="file-label">
+            <button id="recordBtn" class="record-btn" title="Record an audio response in your browser" data-tooltip="Start recording a short audio response. Works only on supported browsers over HTTPS.">Record</button>
+            <button id="stopBtn" class="secondary-btn" title="Stop the current recording" data-tooltip="Stop the recording and prepare it for saving." disabled>Stop</button>
+            <label class="file-label" title="Upload an audio file" data-tooltip="Upload a voice memo or audio clip instead of recording in the browser.">
               <input id="fileInput" type="file" accept="audio/*">
               Upload
             </label>
-            <button id="submitResponseBtn" class="primary-btn" disabled>Submit</button>
+            <button id="submitResponseBtn" class="primary-btn" title="Save this audio clip to the selected prompt" data-tooltip="Attach the current recording or upload to the selected prompt." disabled>Save clip</button>
           </div>
           <span class="muted small" id="recordStatus"></span>
           <audio id="preview" controls class="audio-preview"></audio>
@@ -158,15 +251,16 @@
   <footer>
     <p class="muted small">
       <a href="https://davidreinstein.org" target="_blank">David Reinstein</a> &middot;
-      Data persists across restarts
+      Availability clears automatically &middot; Comment with Hypothes.is
     </p>
   </footer>
 
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="/app.js"></script>
+  <script src="socket.io/socket.io.js"></script>
+  <script src="app.js"></script>
+  <script async src="https://hypothes.is/embed.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js')
+      navigator.serviceWorker.register('sw.js')
         .then(reg => console.log('SW registered'))
         .catch(err => console.log('SW failed:', err));
     }

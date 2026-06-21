@@ -6,16 +6,18 @@
       "types": [
         { "id": "quick-hello", "label": "Quick hello", "icon": "👋", "duration": 5 },
         { "id": "phone-call", "label": "Phone call", "icon": "📞", "duration": 15 },
-        { "id": "video-call", "label": "Video call", "icon": "📹", "duration": 30 },
-        { "id": "screen-share", "label": "Screen sharing", "icon": "🖥️", "duration": 45 },
-        { "id": "in-person", "label": "In person", "icon": "🤝", "duration": 30 },
-        { "id": "async-text", "label": "Text/async only", "icon": "💬", "duration": 60 }
+        { "id": "facetime-video", "label": "FaceTime / video", "icon": "📹", "duration": 30 },
+        { "id": "drive-time-call", "label": "Drive-time call", "icon": "🚗", "duration": 20 },
+        { "id": "async-text", "label": "Async text", "icon": "💬", "duration": 5 }
       ]
     },
     {
       "id": "attention",
       "label": "What's your attention level?",
+      "advanced": true,
       "types": [
+        { "id": "video-call", "label": "Video call", "icon": "📹", "duration": 30 },
+        { "id": "screen-share", "label": "Screen sharing", "icon": "🖥️", "duration": 45 },
         { "id": "full-attention", "label": "Full attention", "icon": "🎯", "duration": 60 },
         { "id": "multitasking", "label": "Multitasking OK", "icon": "🔀", "duration": 30 },
         { "id": "listen-only", "label": "Can listen, can't talk", "icon": "👂", "duration": 15 },
@@ -38,10 +40,14 @@
   ],
   "contactMethods": [
     { "id": "phone", "label": "Phone", "icon": "📞", "placeholder": "+1 555-123-4567", "urlTemplate": "tel:{value}" },
+    { "id": "sms", "label": "SMS / iMessage", "icon": "💬", "placeholder": "+1 555-123-4567", "urlTemplate": "sms:{value}" },
+    { "id": "facetime", "label": "FaceTime", "icon": "📹", "placeholder": "+1 555-123-4567 or you@example.com", "urlTemplate": "facetime:{value}" },
     { "id": "whatsapp", "label": "WhatsApp", "icon": "💬", "placeholder": "+1 555-123-4567", "urlTemplate": "https://wa.me/{value}" },
     { "id": "zoom", "label": "Zoom", "icon": "📹", "placeholder": "https://zoom.us/j/...", "urlTemplate": "{value}" },
     { "id": "meet", "label": "Google Meet", "icon": "🎥", "placeholder": "https://meet.google.com/...", "urlTemplate": "{value}" },
     { "id": "teams", "label": "Teams", "icon": "👥", "placeholder": "https://teams.microsoft.com/...", "urlTemplate": "{value}" },
+    { "id": "signal", "label": "Signal", "icon": "🔒", "placeholder": "https://signal.me/#p/+15551234567", "urlTemplate": "{value}" },
+    { "id": "telegram", "label": "Telegram", "icon": "✈️", "placeholder": "https://t.me/username", "urlTemplate": "{value}" },
     { "id": "slack", "label": "Slack DM", "icon": "💼", "placeholder": "@username or channel", "urlTemplate": null },
     { "id": "email", "label": "Email", "icon": "📧", "placeholder": "you@example.com", "urlTemplate": "mailto:{value}" },
     { "id": "calendly", "label": "Calendly", "icon": "📅", "placeholder": "https://calendly.com/...", "urlTemplate": "{value}" },

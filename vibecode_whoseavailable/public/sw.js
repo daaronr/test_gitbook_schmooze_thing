@@ -1,15 +1,17 @@
 // Bump this version when static assets change to clear old caches
-const CACHE_VERSION = 3;
+const CACHE_VERSION = 20;
 const CACHE_NAME = `whos-available-v${CACHE_VERSION}`;
+const SCOPE_URL = new URL(self.registration.scope);
 const STATIC_ASSETS = [
-  '/',
-  '/index.html',
-  '/app.js',
-  '/styles.css',
-  '/manifest.json',
-  '/icons/icon-192.png',
-  '/icons/icon-512.png',
-];
+  '.',
+  'index.html',
+  'app.js',
+  'styles.css',
+  'walkthrough.html',
+  'manifest.json',
+  'icons/icon-192.png',
+  'icons/icon-512.png',
+].map(path => new URL(path, SCOPE_URL).toString());
 
 // Install - cache static assets
 self.addEventListener('install', (event) => {
@@ -46,7 +48,7 @@ self.addEventListener('fetch', (event) => {
   if (request.method !== 'GET') return;
 
   // Skip socket.io and API requests (always need fresh data)
-  if (url.pathname.startsWith('/socket.io') || url.pathname.startsWith('/api')) {
+  if (url.pathname.includes('/socket.io') || url.pathname.includes('/api')) {
     return;
   }
 
@@ -69,7 +71,7 @@ self.addEventListener('fetch', (event) => {
           if (cached) return cached;
           // Return offline page for navigation requests
           if (request.mode === 'navigate') {
-            return caches.match('/');
+            return caches.match(new URL('.', SCOPE_URL).toString());
           }
           return new Response('Offline', { status: 503 });
         });

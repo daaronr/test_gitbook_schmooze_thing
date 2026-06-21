@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: whos-available
+    runtime: node
+    plan: starter
+    autoDeploy: true
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: STORAGE_DIR
+        value: /var/data
+    disk:
+      name: whos-available-data
+      mountPath: /var/data
+      sizeGB: 1

@@ -1,0 +1,16 @@
+[Unit]
+Description=Who's Available realtime app
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/whos-available
+Environment=PORT=3001
+Environment=NODE_ENV=production
+Environment=STORAGE_DIR=/var/lib/whos-available
+ExecStart=/opt/node-v22.21.1-linux-x64/bin/node /opt/whos-available/server.js
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

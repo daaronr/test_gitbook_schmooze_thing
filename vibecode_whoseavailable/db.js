@@ -56,6 +56,16 @@ const stmts = {
   `),
   getTopicsByRoom: db.prepare('SELECT * FROM topics WHERE room = ? ORDER BY createdAt DESC'),
   getTopicById: db.prepare('SELECT * FROM topics WHERE id = ?'),
+  getRecentDuplicateTopic: db.prepare(`
+    SELECT * FROM topics
+    WHERE room = ?
+      AND title = ?
+      AND prompt = ?
+      AND createdBy = ?
+      AND createdAt >= ?
+    ORDER BY createdAt DESC
+    LIMIT 1
+  `),
   deleteTopic: db.prepare('DELETE FROM topics WHERE id = ?'),
 
   insertResponse: db.prepare(`
@@ -81,6 +91,9 @@ module.exports = {
   },
   getTopicById(id) {
     return stmts.getTopicById.get(id);
+  },
+  getRecentDuplicateTopic(room, title, prompt, createdBy, since) {
+    return stmts.getRecentDuplicateTopic.get(room, title, prompt, createdBy, since);
   },
   deleteTopic(id) {
     // CASCADE deletes responses too
